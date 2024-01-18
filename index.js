@@ -1,7 +1,7 @@
 const path = require("path");
 const ejs = require("ejs");
 const config = require('./config.json');
-const fetch = require('node-fetch'); // Import node-fetch directly
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const express = require('express');
 
 const app = express();
@@ -27,7 +27,7 @@ app.get('/update/:id', (req, res) => {
   });
 });
 
-app.use(express.urlencoded({ extended: true })); // Add middleware to parse form data
+app.use(express.urlencoded({ extended: true })); 
 
 app.post('/update/new', async (req, res) => {
   try {
