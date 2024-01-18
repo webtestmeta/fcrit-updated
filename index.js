@@ -8,8 +8,8 @@ const app = express();
 
 app.engine("html", ejs.renderFile);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, "/website/views"));
-app.use(express.static(path.join(__dirname, "/website/public")));
+app.set('views', path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.set('json spaces', 1);
 
