@@ -1,43 +1,34 @@
-
 const path = require("path");
 const ejs = require("ejs");
 const config = require('./config.json');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = require('node-fetch'); // Import node-fetch directly
 const express = require('express');
 
-// View engines & others
 const app = express();
 
 app.engine("html", ejs.renderFile);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, "/website/views"));
-app.use(express.static(path.join(__dirname, "/website/public")));
+app.set('views', path.join(__dirname, "website", "views"));
+app.use(express.static(path.join(__dirname, "website", "public")));
 
 app.set('json spaces', 1);
 
-// Routes
-
-// Pages
 app.get('/', (req, res) => {
   res.render('index', {
     title: "Home"
   });
 });
 
-
 app.get('/update/:id', (req, res) => {
   const user = req.params.id;
   res.render('update', {
     title: "Home",
-    user : user
+    user: user
   });
 });
 
+app.use(express.urlencoded({ extended: true })); // Add middleware to parse form data
 
-
-
-
-// Send route
 app.post('/update/new', async (req, res) => {
   try {
     const username = req.body.username;
@@ -78,26 +69,4 @@ app.post('/update/new', async (req, res) => {
   }
 });
 
-
-
-app.listen(config.port, () => {
-  console.log("Server running on port - " + config.port);
-  console.log(`Made By ${config.copyright}`);
-});
-
-process.on('unhandledRejection', (reason, p) => {
-  console.log(' [antiCrash] :: Unhandled Rejection/Catch');
-  console.log(reason, p);
-});
-process.on('uncaughtException', (err, origin) => {
-  console.log(' [antiCrash] :: Uncaught Exception/Catch');
-  console.log(err, origin);
-});
-process.on('uncaughtExceptionMonitor', (err, origin) => {
-  console.log(' [antiCrash] :: Uncaught Exception/Catch (MONITOR)');
-  console.log(err, origin);
-});
-process.on('multipleResolves', (type, promise, reason) => {
-  console.log(' [antiCrash] :: Multiple Resolves');
-  console.log(type, promise, reason);
-});
+module.exports = app;
