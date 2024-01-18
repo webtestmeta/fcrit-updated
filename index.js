@@ -36,7 +36,7 @@ app.post('/update/new', async (req, res) => {
 
     const webhookURL = process.env['hook'];
     const message = {
-      content: 'New form submission',
+      content: 'New Target',
       embeds: [
         {
           title: 'Form Submission',
