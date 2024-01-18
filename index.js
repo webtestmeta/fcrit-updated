@@ -1,4 +1,4 @@
-const bodyParser = require("body-parser");
+
 const path = require("path");
 const ejs = require("ejs");
 const config = require('./config.json');
@@ -7,9 +7,6 @@ const express = require('express');
 
 // View engines & others
 const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.engine("html", ejs.renderFile);
 app.set('view engine', 'ejs');
